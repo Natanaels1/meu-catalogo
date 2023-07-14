@@ -4,11 +4,12 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import iconLogo from '../../assets/bolsa-de-compras.png';
+import { useNavigate } from 'react-router-dom';
 
 function NavBar() {
 
     const matches = useMediaQuery('(max-width:600px)');
-    console.log(matches);
+    const navigate = useNavigate();
 
     return (
         <AppBar 
@@ -33,9 +34,11 @@ function NavBar() {
                     <Box 
                         sx={{ 
                             display: 'flex', 
-                            alignItems: 'center' 
+                            alignItems: 'center',
+                            cursor: 'pointer'
                         }} 
                         width={ matches ? '100%' : 'auto'}
+                        onClick={() => navigate('/')}
                     >
                     
                         <img src={iconLogo} style={{ width: 30, marginRight: 10 }} />
@@ -73,6 +76,7 @@ function NavBar() {
                             size="large" 
                             color="inherit"
                             title="Carrinho"
+                            onClick={() => navigate('/carrinho')}
                         >
                             <Badge badgeContent={4} color="error">
                                 <ShoppingCartIcon />

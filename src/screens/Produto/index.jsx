@@ -25,6 +25,21 @@ export default function PageProduto() {
 
     const matches = useMediaQuery('(max-width:600px)');
 
+    const dadosProduto = {
+        id: 4,
+        tipo: 'Caneca',
+        nmProduto: 'Caneca mensagem biblica',
+        img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
+        descricao: 'Caneca 350ml, personalizavel, pode colocar no microondas',
+        vlProduto: 22.49,
+        prontaEntrega: false,
+        imgsProduto: [
+            'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
+            'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
+            'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
+        ]
+    };
+
     return (
 
         <Box sx={{ mt: 12 }}>
@@ -38,7 +53,7 @@ export default function PageProduto() {
                     maxWidth={!matches && "lg"}
                 >
 
-                    <Box sx={{ width: matches ? '100%' : '65%', height: '400', backgroundColor: '#f3f3f3', overflow: 'inherit', borderRadius: 2, pt: 4 }}> 
+                    <Box sx={{ width: matches ? '100%' : '65%', height: !matches ? 650 : 400, overflow: 'inherit', borderRadius: 2, pt: 4 }}> 
                         <Carousel 
                             showThumbs={true} 
                             showIndicators={true} 
@@ -46,27 +61,27 @@ export default function PageProduto() {
                             showArrows={true}
                             transitionTime={500}
                         > 
-                                <div>
-                                    <img src={'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg'} style={{ width: '60%' }}/>
-                                </div>
-                                <div>
-                                    <img src={'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg'} style={{ width: '60%' }}/>
-                                </div>
-                                <div>
-                                    <img src={'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'} style={{ width: '60%' }}/>
-                                </div>
+                            {
+                                dadosProduto.imgsProduto.map( img => (
+                                    <div key={img}>
+                                        <img src={img} style={{ width: '60%' }}/>
+                                    </div>
+
+                                ))
+                            }
                         </Carousel>
                     </Box>
 
                     <Box sx={{ width: matches ? '100%' : '35%', minHeight: 450, height: 'auto', backgroundColor: '#f3f3f3', borderRadius: 2, padding: 3}}> 
+
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Typography variant="h5" component="h2">
-                                Nome do produto
+                                {dadosProduto.nmProduto}
                             </Typography>
 
-                            <IconButton title='Adicionar aos favoritos'>
+                            {/* <IconButton title='Adicionar aos favoritos'>
                                 <FavoriteBorderIcon sx={{ fontSize: 30 }} />
-                            </IconButton>
+                            </IconButton> */}
                         </Box>
 
                         <Box sx={{ mt: 2 }}>
@@ -82,6 +97,10 @@ export default function PageProduto() {
                                     value={null}
                                     label="Quantidade"
                                     onChange={null}
+                                    size="medium"
+                                    sx={{
+                                        alignItems: 'center',
+                                    }}
                                 >
                                     <MenuItem value={1}>1</MenuItem>
                                     <MenuItem value={2}>2</MenuItem>
@@ -106,7 +125,7 @@ export default function PageProduto() {
                                     Valor
                                 </Typography>
                                 <Typography variant="p" component="p" fontWeight="bold" fontSize="22px" sx={{ mt: 4, color: '#47A9E0' }}>
-                                    R$ 40,00
+                                    R$ {dadosProduto.vlProduto.toLocaleString('BRL')}
                                 </Typography>
                             </Box>
 
@@ -134,15 +153,7 @@ export default function PageProduto() {
                 >
                     <Box sx={{ width: '100%', minHeight: 300, backgroundColor: '#f3f3f3', borderRadius: 2, padding: 2, flexDirection: 'column'}}>
                         <Typography>
-                            INFORMAÇÕES GERAIS
-
-                            - Capacidade: 325ml
-                            - Material: Porcelana
-                            - Pode ser usada no microondas
-                            - Altura da caneca 9,5 cm
-                            - Diâmetro da caneca: 8 cm
-                            - Cor da Caneca: Branca
-                            - Lavar sempre com o lado macio da esponja.
+                            {dadosProduto.descricao}
                         </Typography>
                     </Box>
                 </Container>
@@ -159,12 +170,15 @@ export default function PageProduto() {
                     mb: 4
                 }}
                 maxWidth={!matches && "lg" }
-            >
-                <Box>
-                    <Typography variant="h5" component="h2">
-                        Produtos similares
-                    </Typography>
-                </Box>
+            >   
+                {
+                    true &&
+                    <Box>
+                        <Typography variant="h5" component="h2">
+                            Produtos similares
+                        </Typography>
+                    </Box>
+                }
             </Container>
 
             <Container
@@ -177,9 +191,12 @@ export default function PageProduto() {
                 }}
                 maxWidth={!matches && "lg"}
             >
-                <Box sx={{ width: '100%', height: 200, backgroundColor: '#f3f3f3', borderRadius: 2, padding: 2, flexDirection: 'column', overflow: 'clip'}}>
-                    
-                </Box>
+                {
+                    true &&
+                    <Box sx={{ width: '100%', height: 200, backgroundColor: '#f3f3f3', borderRadius: 2, padding: 2, flexDirection: 'column', overflow: 'clip'}}>
+                        
+                    </Box>
+                }
             </Container>
 
             <Footer />
