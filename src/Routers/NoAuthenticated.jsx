@@ -9,7 +9,7 @@ export default function NoAuthenticated() {
         <BrowserRouter>
             <Routes>
                 <Route path="*" element={<Home />} />
-                <Route path="/produto" element={<PageProduto />} />
+                <Route path="/produto/:idProduto" element={<PageProduto />} />
                 <Route path="/carrinho" element={<Carrinho />} />
             </Routes>
         </BrowserRouter>

@@ -1,5 +1,3 @@
-// import { useEffect, useState } from 'react';
-
 import {
     Typography,
     Button,
@@ -14,99 +12,18 @@ import Footer from '../../components/Footer';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 import ItemCarrinho from "../../components/ItemCarrinho";
+import { useStoreCarrinho } from "../../stores/carrinho.store";
 
 export default function Carrinho() {
 
     const matches = useMediaQuery('(max-width:600px)');
 
-    const produtosSelecionados = [
-        {
-            id: 0,
-            tipo: 'Caneca',
-            nmProduto: 'Caneca mensagem biblica',
-            img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-            descricao: 'Caneca 350ml, personalizavel, pode colocar no microondas',
-            vlProduto: 22.49,
-            prontaEntrega: false,
-            imgsProduto: [
-                'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
-                'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-                'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
-            ]
-        },
-        {
-            id: 1,
-            tipo: 'Caneca',
-            nmProduto: 'Caneca mensagem biblica',
-            img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-            descricao: 'Caneca 350ml, personalizavel, pode colocar no microondas',
-            vlProduto: 22.49,
-            prontaEntrega: false,
-            imgsProduto: [
-                'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
-                'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-                'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
-            ]
-        },
-        {
-            id: 0,
-            tipo: 'Caneca',
-            nmProduto: 'Caneca mensagem biblica',
-            img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-            descricao: 'Caneca 350ml, personalizavel, pode colocar no microondas',
-            vlProduto: 22.49,
-            prontaEntrega: false,
-            imgsProduto: [
-                'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
-                'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-                'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
-            ]
-        },
-        {
-            id: 1,
-            tipo: 'Caneca',
-            nmProduto: 'Caneca mensagem biblica',
-            img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-            descricao: 'Caneca 350ml, personalizavel, pode colocar no microondas',
-            vlProduto: 22.49,
-            prontaEntrega: false,
-            imgsProduto: [
-                'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
-                'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-                'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
-            ]
-        },
-        {
-            id: 0,
-            tipo: 'Caneca',
-            nmProduto: 'Caneca mensagem biblica',
-            img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-            descricao: 'Caneca 350ml, personalizavel, pode colocar no microondas',
-            vlProduto: 22.49,
-            prontaEntrega: false,
-            imgsProduto: [
-                'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
-                'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-                'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
-            ]
-        },
-        {
-            id: 1,
-            tipo: 'Caneca',
-            nmProduto: 'Caneca mensagem biblica',
-            img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-            descricao: 'Caneca 350ml, personalizavel, pode colocar no microondas',
-            vlProduto: 22.49,
-            prontaEntrega: false,
-            imgsProduto: [
-                'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
-                'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
-                'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
-            ]
-        }
-    ];
+    const {
+        Carrinho,
+        removeProduto
+	} = useStoreCarrinho(state => state);
 
-    const somaVlProduto = produtosSelecionados.reduce((acumulador, produto) => {
+    const somaVlProduto = Carrinho.reduce((acumulador, produto) => {
         return acumulador + produto.vlProduto;
     }, 0);
 
@@ -114,15 +31,17 @@ export default function Carrinho() {
 
         const numero = "5579998024140";
 
-        let mensagem = produtosSelecionados.map( produto => {
+        let mensagem = Carrinho.map(produto => {
 
             return `
                 Nome do produto: ${produto.nmProduto}
                 Tipo do produto: ${produto.tipo}
                 valor: R$ ${produto.vlProduto}
+                personalização solicitada: ${produto.personalizacao}
+                quantidade deste produto: ${produto.qntd}
             `;
 
-        }); 
+        });
 
         mensagem = encodeURIComponent(mensagem);
 
@@ -131,8 +50,19 @@ export default function Carrinho() {
         window.open(link);
     }
 
-    return (
+    function altQntdProduto(id, action) {
 
+        const produtoEncontrado = Carrinho.find(produto => produto.id === id);
+
+        if (produtoEncontrado) {
+
+            produtoEncontrado.qntd = produtoEncontrado.qntd + 1;
+
+            // setProdutosSelecionados([])
+        }
+    }
+
+    return (
         <Box sx={{ mt: 12 }}>
 
             <NavBar />
@@ -154,9 +84,30 @@ export default function Carrinho() {
 
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             {
-                                produtosSelecionados.map(produto => (
-                                    <ItemCarrinho key={produto.nmProduto} produto={produto} />
-                                ))
+                                    Carrinho.length > 0 ?
+                                    Carrinho.map(produto => (
+                                        <ItemCarrinho 
+                                            key={produto.nmProduto} 
+                                            produto={produto} 
+                                            removeProduto={(id) => removeProduto(id)} 
+                                            altQntdProduto={(id, action) => altQntdProduto(id, action)}
+                                        />
+                                    ))
+                                    :
+                                    <Box
+                                        sx={{
+                                            width: '100%',
+                                            height: 200,
+                                            alignItems: 'center',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <Typography variant="h6" color="secondary">
+                                            O carrinho está vazio
+                                        </Typography>
+                                    </Box>
                             }
                         </Box>
                     </Box>
@@ -177,7 +128,7 @@ export default function Carrinho() {
                                 </Typography>
 
                                 <Typography variant="p" component="p" sx={{ mt: 4 }} fontWeight="bold" fontSize="22px">
-                                    {produtosSelecionados.length}
+                                    {Carrinho.length}
                                 </Typography>
                             </Box>
 

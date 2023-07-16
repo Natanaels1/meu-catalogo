@@ -13,9 +13,16 @@ export default function CardProduto({produto}) {
     const isProntaEntrega = produto.prontaEntrega;
 
     return (
-        <Grid item key={id}  xs={6} sm={6} md={3} onClick={() => navigate('/produto', {
-            produto: produto 
-        })}>
+        <Grid 
+            item 
+            key={id}  
+            xs={6} 
+            sm={6} 
+            md={3} 
+            onClick={() => {
+                navigate('/produto/' + id)
+            }}
+        >
             <Card
                 key={id}
                 sx={{ 

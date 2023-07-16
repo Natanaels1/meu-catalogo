@@ -5,11 +5,17 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import iconLogo from '../../assets/bolsa-de-compras.png';
 import { useNavigate } from 'react-router-dom';
+import { useStoreCarrinho } from "../../stores/carrinho.store";
 
 function NavBar() {
 
     const matches = useMediaQuery('(max-width:600px)');
     const navigate = useNavigate();
+
+    const {
+        Carrinho
+	} = useStoreCarrinho(state => state);
+
 
     return (
         <AppBar 
@@ -78,7 +84,7 @@ function NavBar() {
                             title="Carrinho"
                             onClick={() => navigate('/carrinho')}
                         >
-                            <Badge badgeContent={4} color="error">
+                            <Badge badgeContent={Carrinho.length} color="error">
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>

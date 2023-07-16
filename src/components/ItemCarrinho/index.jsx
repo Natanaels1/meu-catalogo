@@ -6,13 +6,18 @@ import { useNavigate } from "react-router-dom";
 
 import QtdItems from "../QntItems";
 
-export default function ItemCarrinho({ produto }) {
+export default function ItemCarrinho({ produto, removeProduto, altQntdProduto }) {
 
     const matches = useMediaQuery('(max-width:600px)');
     const navigate = useNavigate();
 
+    const acaoDoFilho = (mensagemDoFilho) => {
+        altQntdProduto(produto.id, '+1');
+    };
+
     return (
         <Box
+            key={produto.nmProduto}
             sx={{
                 width: '100%',
                 padding: 1,
@@ -33,7 +38,14 @@ export default function ItemCarrinho({ produto }) {
                     gap: 2
                 }}
             >
-                <img src={produto.imgsProduto[0]} width={50} style={{ cursor: 'pointer' }} onClick={() => navigate('/produto')} />
+                <img 
+                    src={produto.imgsProduto[0]} 
+                    width={50} 
+                    style={{ cursor: 'pointer' }} 
+                    onClick={() => {
+                        navigate('/produto/' + produto.id);
+                    }} 
+                />
 
                 <Box
                     sx={{
@@ -62,9 +74,13 @@ export default function ItemCarrinho({ produto }) {
                 }}
             >
 
-                <QtdItems />
+                <QtdItems 
+                    idProduto={produto.id}
+                    onAcaoDoFilho={acaoDoFilho}
+                    qntdItems={produto.qntd}
+                />
 
-                <IconButton>
+                <IconButton onClick={() => removeProduto(produto.id)}>
                     <HighlightOffIcon color="error" />
                 </IconButton>
             </Box>

@@ -2,9 +2,11 @@ import { Box, IconButton, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-export default function QtdItems() {
+export default function QtdItems({onAcaoDoFilho, qntdItems}) {
 
-    let qntd = 1;
+    function altQntdItem() {
+        onAcaoDoFilho('teste');
+    }
 
     return (
         <Box 
@@ -16,15 +18,15 @@ export default function QtdItems() {
                 alignItems: 'center',
             }}
         >
-            <IconButton>
+            <IconButton onClick={() => altQntdItem()}>
                 <RemoveIcon sx={{ fontSize: 14 }} />
             </IconButton>
             
             <Typography variant="span" sx={{ color: '#47A9E0' }}>
-                {qntd}
+                {qntdItems}
             </Typography>
 
-            <IconButton>
+            <IconButton onClick={() => altQntdItem()}>
                 <AddIcon sx={{ fontSize: 14 }} />
             </IconButton>
         </Box>
