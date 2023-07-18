@@ -12,18 +12,16 @@ import CardProduto from '../../components/CardProduto';
 import { Pagination } from '@mui/material';
 import Carousel from '../../components/CarouselHome';
 
-import { produtos } from '../../services/dbProdutos';
+import { useStoreProdutosDisponiveis } from '../../stores/produtosDisponiveis.store';
 
 export default function Home() {
 
     const matches = useMediaQuery('(max-width:600px)');
 
-    const [ produtosData, setProdutosData ] = useState([]);
-
-    const getProdutos = () => {
-        setProdutosData(produtos);
-        return;
-    };
+    const { 
+        Produtos,
+        getProdutos
+    } = useStoreProdutosDisponiveis();
 
     useEffect(() => {
         getProdutos();
@@ -76,8 +74,8 @@ export default function Home() {
 
                     <Grid container spacing={2}>
                         {   
-                            produtosData &&
-                            produtosData.map( produto => (
+                            Produtos &&
+                            Produtos.map( produto => (
                                 <CardProduto key={produto.id} produto={produto} />                                
                             ))
                         }
@@ -90,7 +88,19 @@ export default function Home() {
                             justifyContent: 'center',
                         }}
                     >
-                        <Pagination count={10} color='secondary' sx={{ bgColor: "#47A9E0", mt: 4 }} />
+                        {
+                            false &&
+                            <Pagination 
+                                count={10} 
+                                defaultPage={1} 
+                                siblingCount={0} 
+                                boundaryCount={1}
+                                color='standard' 
+                                sx={{ color: "#47A9E0", mt: 4 }} 
+                                size="large"
+                                onChange={(e) => console.log(e.currentTarget.textContent)}
+                            />
+                        }
                     </Box>
                 </Container>
 

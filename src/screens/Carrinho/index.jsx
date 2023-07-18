@@ -29,28 +29,46 @@ export default function Carrinho() {
 
     function finalizaPedido() {
 
-        const numero = "5579998024140";
+        const numero = "557998024140";
+        // const numero = "557999830201";
+
+        const nomeCliente = "Natanael Souza";
 
         let mensagem = Carrinho.map(produto => {
 
-            return `
-                Nome do produto: ${produto.nmProduto}
-                Tipo do produto: ${produto.tipo}
-                valor: R$ ${produto.vlProduto}
-                personalização solicitada: ${produto.personalizacao}
-                quantidade deste produto: ${produto.qntd}
-            `;
+return `
+*NOME DO PRODUTO:*
+${produto.nmProduto}
+
+*TIPO DO PRODUTO:*
+${produto.tipo}
+
+*PERSONALIZAÇÃO SOLICITADA:* 
+${produto.personalizacaoCliente}
+
+*QUANTIDADE DESTE PRODUTO:*
+${produto.qntd}
+
+*VALOR: R$ ${parseFloat(produto.vlProduto.toFixed(2))}*
+
+----------------------------------------------
+`;
 
         });
 
-        mensagem = encodeURIComponent(mensagem);
+        const textoEditado = `
+    *NOME CLIENTE:*
+${nomeCliente}
+----------------------------------------------
+    ${mensagem}
+        `;
 
-        const link = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + mensagem;
+        const link = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(textoEditado);
 
         window.open(link);
     }
 
-    function altQntdProduto(id, action) {
+    function altQntdProduto(id) {
 
         const produtoEncontrado = Carrinho.find(produto => produto.id === id);
 
@@ -137,7 +155,7 @@ export default function Carrinho() {
                                     Valor
                                 </Typography>
                                 <Typography variant="p" component="p" fontWeight="bold" fontSize="22px" sx={{ mt: 2, color: '#47A9E0' }}>
-                                    R$ {somaVlProduto}
+                                    R$ {parseFloat(somaVlProduto.toFixed(2))}
                                 </Typography>
                             </Box>
 

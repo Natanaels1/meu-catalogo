@@ -58,7 +58,7 @@ export default function ItemCarrinho({ produto, removeProduto, altQntdProduto })
                     </Typography>
 
                     <Typography variant="p" fontWeight="bold" fontSize={18} sx={{ color: '#47A9E0' }}>
-                        R$ {produto.vlProduto}
+                        R$ {parseFloat((produto.vlProduto).toFixed(2))}
                     </Typography>
                 </Box>
             </Box>

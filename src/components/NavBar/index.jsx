@@ -1,4 +1,6 @@
-import { AppBar, Badge, Box, Container, IconButton, InputBase, Toolbar, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+
+import { AppBar, Badge, Box, Container, IconButton, InputBase, List, ListItem, ListItemButton, ListItemText, TextField, Toolbar, Typography } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -6,6 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import iconLogo from '../../assets/bolsa-de-compras.png';
 import { useNavigate } from 'react-router-dom';
 import { useStoreCarrinho } from "../../stores/carrinho.store";
+import { useStoreProdutosDisponiveis } from "../../stores/produtosDisponiveis.store";
 
 function NavBar() {
 
@@ -16,6 +19,16 @@ function NavBar() {
         Carrinho
 	} = useStoreCarrinho(state => state);
 
+    const {
+        searchProdutos,
+        ProdutosSearch
+    } = useStoreProdutosDisponiveis();
+
+    const [ busca, setBusca ] = useState("");
+
+    useEffect(() => {
+        setBusca("");
+    }, []);
 
     return (
         <AppBar 
@@ -58,25 +71,100 @@ function NavBar() {
                         sx={{ 
                             display: 'flex', 
                             justifyContent: 'space-between', 
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            boxSizing: 'border-box'
                         }} 
                         width={ matches ? '100%' : '50%'}
                     >
                         
-                        <InputBase
+                        <Box
                             sx={{ 
-                                flex: 1, 
-                                bgcolor: '#F3F3F3', 
-                                borderRadius: 2, 
-                                padding: 1, 
-                                fontSize: '16px', 
-                                height: '30px', 
-                                width: 'auto', 
-                                mr: 1, 
-                                fontWeight: 'bold' 
+                                minWidth: '90%',
+                                flexDirection: 'column',
                             }}
-                            placeholder="O que deseja?"
-                        />
+                            
+                        >
+                            <InputBase
+                                sx={{ 
+                                    flex: 1, 
+                                    bgcolor: '#F3F3F3', 
+                                    borderRadius: 2, 
+                                    padding: 1, 
+                                    fontSize: '16px', 
+                                    height: '30px', 
+                                    width: '100%', 
+                                    mr: 1, 
+                                    fontWeight: 'regular' 
+                                }}
+                                placeholder="O que deseja?"
+                                value={busca}
+                                onChange={(e) => {
+                                    searchProdutos(e.target.value);
+                                    setBusca(e.target.value);
+                                }}
+                                onBlur={() => {
+                                    const listaSearch = document.getElementById('listBuscaProduto');
+
+                                    setTimeout(() => {
+                                        listaSearch.style = 'display: none';
+                                    }, 200);
+                                }}
+                                onFocus={() => {
+                                    const listaSearch = document.getElementById('listBuscaProduto');
+
+                                    if(listaSearch) {
+                                        listaSearch.style = 'display: ';
+                                    }
+                                }}
+                            />
+
+                            {
+                                busca &&
+                                <List 
+                                    id="listBuscaProduto"
+                                    sx={{  
+                                        bgcolor: 'background.paper', 
+                                        position: 'absolute', 
+                                        maxWidth: !matches ? 517 : 308,
+                                        width: '100%',
+                                        mt: 1
+                                    }}
+                                >
+
+                                    <ListItem 
+                                        onClick={() => navigate('/resultado-busca/' + busca)} 
+                                        sx={{ 
+                                            cursor: 'pointer', 
+                                            '&:hover': { bgcolor: '#f3f3f3' } 
+                                        }}>
+                                        <Typography variant="p" color="primary">{busca}</Typography>
+                                    </ListItem>
+                                    
+                                    {
+                                        ProdutosSearch.map((resultado, index) => {
+
+                                            if(index <= 10) {
+
+                                                return (
+                                                    <ListItem 
+                                                        key={resultado.nmProduto} 
+                                                        onClick={() => navigate('/produto/' + resultado.id)} 
+                                                        sx={{ 
+                                                            cursor: 'pointer', 
+                                                            '&:hover': { bgcolor: '#f3f3f3' } 
+                                                        }}
+                                                    >
+                                                        <Typography variant="p" color="primary">{resultado.nmProduto}</Typography>
+                                                    </ListItem>
+                                                )
+
+                                            }
+                                        })
+                                    }
+
+                                </List>
+                            }
+                        </Box>
 
                         <IconButton 
                             size="large" 
@@ -89,16 +177,19 @@ function NavBar() {
                             </Badge>
                         </IconButton>
 
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="primary-search-account-menu"
-                            aria-haspopup="true"
-                            color="inherit"
-                            title="Conta admin"
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                        {
+                            false &&
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="primary-search-account-menu"
+                                aria-haspopup="true"
+                                color="inherit"
+                                title="Conta admin"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        }
 
                     </Box>
 

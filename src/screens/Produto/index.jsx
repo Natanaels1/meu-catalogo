@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useStoreCarrinho } from "../../stores/carrinho.store";
 import { useParams } from 'react-router-dom';
 
@@ -38,6 +38,7 @@ export default function PageProduto() {
     const [dadosProduto] = useState(produtos.find((produto) => produto.id === Number(idProduto)));
 
     const [qntd, setQntd] = useState(1);
+    const [vlAtualProduto, setVlAtualProduto] = useState(dadosProduto.vlProduto);
     const [descricao, setDescricao] = useState("");
 
     const [notif, setNotif] = useState({
@@ -91,8 +92,11 @@ export default function PageProduto() {
     }
 
     function atualizaVlProduto() {
+        
+        console.log(qntd)
+        const somaValores = dadosProduto.vlProduto * qntd;
 
-
+        setVlAtualProduto(parseFloat(somaValores.toFixed(2)));
 
     }
 
@@ -116,139 +120,139 @@ export default function PageProduto() {
             />
 
             <NavBar />
-            
+
             {
                 dadosProduto ?
-                <main style={{ minHeight: '100vh' }}>
+                    <main style={{ minHeight: '100vh' }}>
 
-                    <Container
-                        sx={{ display: "flex", width: '100%', height: '100%', gap: 2, mb: 2, mt: 15, flexDirection: matches ? 'column' : 'row' }}
-                        maxWidth={!matches && "lg"}
-                    >
+                        <Container
+                            sx={{ display: "flex", width: '100%', height: '100%', gap: 2, mb: 2, mt: 15, flexDirection: matches ? 'column' : 'row' }}
+                            maxWidth={!matches && "lg"}
+                        >
 
-                        <Box sx={{ width: matches ? '100%' : '65%', height: !matches ? 650 : 400, overflow: 'inherit', borderRadius: 2 }}>
-                            <Carousel
-                                showThumbs={true}
-                                showIndicators={true}
-                                showStatus={false}
-                                showArrows={true}
-                                transitionTime={500}
-                            >
-                                {
-                                    dadosProduto.imgsProduto.map(img => (
-                                        <div key={img}>
-                                            <img src={img} style={{ width: '60%' }} />
-                                        </div>
-                                    ))
-                                }
-                            </Carousel>
-                        </Box>
-
-                        <Box sx={{ width: matches ? '100%' : '35%', minHeight: 450, height: 'auto', backgroundColor: '#f3f3f3', borderRadius: 2, padding: 3 }}>
-
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Typography variant="h5" component="h2">
-                                    {dadosProduto.nmProduto}
-                                </Typography>
+                            <Box sx={{ width: matches ? '100%' : '65%', height: !matches ? 650 : 400, overflow: 'inherit', borderRadius: 2 }}>
+                                <Carousel
+                                    showThumbs={true}
+                                    showIndicators={true}
+                                    showStatus={false}
+                                    showArrows={true}
+                                    transitionTime={500}
+                                >
+                                    {
+                                        dadosProduto.imgsProduto.map(img => (
+                                            <div key={img}>
+                                                <img src={img} style={{ width: '60%' }} />
+                                            </div>
+                                        ))
+                                    }
+                                </Carousel>
                             </Box>
 
-                            <Box sx={{ mt: 2 }}>
+                            <Box sx={{ width: matches ? '100%' : '35%', minHeight: 450, height: 'auto', backgroundColor: '#f3f3f3', borderRadius: 2, padding: 3 }}>
 
-                                <Typography variant="p" component="p" sx={{ mt: 4 }}>
-                                    Informe a quantidade
-                                </Typography>
-
-                                <FormControl fullWidth sx={{ mt: 1 }}>
-                                    <InputLabel id="demo-simple-select-label">Quantidade</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="Quantidade"
-                                        size="medium"
-                                        sx={{
-                                            alignItems: 'center',
-                                        }}
-                                        onChange={e => {
-                                            setQntd(e.target.value);
-                                            atualizaVlProduto();
-                                        }}
-                                        value={qntd}
-                                    >
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={4}>4</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
-                                        <MenuItem value={6}>6</MenuItem>
-                                        <MenuItem value={7}>7</MenuItem>
-                                        <MenuItem value={8}>8</MenuItem>
-                                        <MenuItem value={9}>9</MenuItem>
-                                        <MenuItem value={10}>10</MenuItem>
-                                    </Select>
-                                </FormControl>
-
-                                <Typography variant="p" component="p" sx={{ mt: 4 }}>
-                                    Gostaria de alguma personalização?
-                                </Typography>
-
-                                <TextField
-                                    id="outlined-multiline-flexible"
-                                    label="Descreva"
-                                    multiline
-                                    maxRows={6}
-                                    sx={{ mt: 1, width: '100%', fontSize: '14px' }}
-                                    value={descricao}
-                                    onChange={e => setDescricao(e.target.value)}
-                                />
-
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography variant="p" component="p" sx={{ mt: 4 }}>
-                                        Valor
-                                    </Typography>
-                                    <Typography variant="p" component="p" fontWeight="bold" fontSize="22px" sx={{ mt: 4, color: '#47A9E0' }}>
-                                        R$ {dadosProduto.vlProduto.toLocaleString('BRL')}
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Typography variant="h5" component="h2">
+                                        {dadosProduto.nmProduto}
                                     </Typography>
                                 </Box>
 
-                                <Button
-                                    variant="contained"
-                                    startIcon={<ShoppingCartCheckoutIcon />}
-                                    sx={{
-                                        width: '100%', bottom: 0, mt: 2, bgcolor: '#42BB73', '&:hover': {
-                                            bgcolor: '#43BB90'
-                                        },
-                                    }}
-                                    onClick={() => addProCarrinho(dadosProduto)}
-                                >
-                                    Comprar este produto
-                                </Button>
+                                <Box sx={{ mt: 2 }}>
+
+                                    <Typography variant="p" component="p" sx={{ mt: 4 }}>
+                                        Informe a quantidade
+                                    </Typography>
+
+                                    <FormControl fullWidth sx={{ mt: 1 }}>
+                                        <InputLabel id="demo-simple-select-label">Quantidade</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            label="Quantidade"
+                                            size="medium"
+                                            sx={{
+                                                alignItems: 'center',
+                                            }}
+                                            onChange={e => {
+                                                setQntd(e.target.value);
+                                                atualizaVlProduto();
+                                            }}
+                                            value={qntd}
+                                        >
+                                            <MenuItem value={1}>1</MenuItem>
+                                            <MenuItem value={2}>2</MenuItem>
+                                            <MenuItem value={3}>3</MenuItem>
+                                            <MenuItem value={4}>4</MenuItem>
+                                            <MenuItem value={5}>5</MenuItem>
+                                            <MenuItem value={6}>6</MenuItem>
+                                            <MenuItem value={7}>7</MenuItem>
+                                            <MenuItem value={8}>8</MenuItem>
+                                            <MenuItem value={9}>9</MenuItem>
+                                            <MenuItem value={10}>10</MenuItem>
+                                        </Select>
+                                    </FormControl>
+
+                                    <Typography variant="p" component="p" sx={{ mt: 4 }}>
+                                        Gostaria de alguma personalização?
+                                    </Typography>
+
+                                    <TextField
+                                        id="outlined-multiline-flexible"
+                                        label="Descreva"
+                                        multiline
+                                        maxRows={6}
+                                        sx={{ mt: 1, width: '100%', fontSize: '14px' }}
+                                        value={descricao}
+                                        onChange={e => setDescricao(e.target.value)}
+                                    />
+
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <Typography variant="p" component="p" sx={{ mt: 4 }}>
+                                            Valor
+                                        </Typography>
+                                        <Typography variant="p" component="p" fontWeight="bold" fontSize="22px" sx={{ mt: 4, color: '#47A9E0' }}>
+                                            R$ {vlAtualProduto.toLocaleString('BRL')}
+                                        </Typography>
+                                    </Box>
+
+                                    <Button
+                                        variant="contained"
+                                        startIcon={<ShoppingCartCheckoutIcon />}
+                                        sx={{
+                                            width: '100%', bottom: 0, mt: 2, bgcolor: '#42BB73', '&:hover': {
+                                                bgcolor: '#43BB90'
+                                            },
+                                        }}
+                                        onClick={() => addProCarrinho(dadosProduto)}
+                                    >
+                                        Comprar este produto
+                                    </Button>
+
+                                </Box>
 
                             </Box>
 
-                        </Box>
+                        </Container>
 
-                    </Container>
+                        <Container
+                            sx={{
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                mt: 2,
+                                mb: 10,
+                            }}
+                            maxWidth={!matches && "lg"}
+                        >
+                            <Box sx={{ width: '100%', minHeight: 300, backgroundColor: '#f3f3f3', borderRadius: 2, padding: 2, flexDirection: 'column' }}>
+                                <Typography>
+                                    {dadosProduto.descricao}
+                                </Typography>
+                            </Box>
+                        </Container>
 
-                    <Container
-                        sx={{
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            mt: 2,
-                            mb: 10,
-                        }}
-                        maxWidth={!matches && "lg"}
-                    >
-                        <Box sx={{ width: '100%', minHeight: 300, backgroundColor: '#f3f3f3', borderRadius: 2, padding: 2, flexDirection: 'column' }}>
-                            <Typography>
-                                {dadosProduto.descricao}
-                            </Typography>
-                        </Box>
-                    </Container>
-
-                </main>
-                :
-                <></>
+                    </main>
+                    :
+                    <></>
             }
 
             <Container
