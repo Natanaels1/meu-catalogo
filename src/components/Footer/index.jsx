@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import iconInsta from '../../assets/instagram.png';
 import iconFace from '../../assets/facebook.png';
-import iconWpp from '../../assets/whatsapp.png';
 
 function Copyright() {
     return (
@@ -33,9 +32,6 @@ export default function Footer() {
                     </Link>
                     <Link>
                         <img src={iconFace}  style={{ width: 30 }} />
-                    </Link>
-                    <Link>
-                        <img src={iconWpp}  style={{ width: 30 }} />
                     </Link>
                 </Box>
 

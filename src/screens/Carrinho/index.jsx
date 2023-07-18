@@ -1,8 +1,11 @@
+import { useState } from "react";
+
 import {
     Typography,
     Button,
     Container,
-    Box
+    Box,
+    Snackbar
 } from "@mui/material";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -23,16 +26,27 @@ export default function Carrinho() {
         removeProduto
 	} = useStoreCarrinho(state => state);
 
+    const [notif, setNotif] = useState({
+        open: false,
+        mensagem: ""
+    });
+
     const somaVlProduto = Carrinho.reduce((acumulador, produto) => {
         return acumulador + produto.vlProduto;
     }, 0);
 
     function finalizaPedido() {
 
+        if(Carrinho.length === 0) {
+            setNotif({
+                open: true,
+                mensagem: "Nenhum produto no carrinho..."
+            })
+            return;
+        }
+
         const numero = "557998024140";
         // const numero = "557999830201";
-
-        const nomeCliente = "Natanael Souza";
 
         let mensagem = Carrinho.map(produto => {
 
@@ -56,12 +70,7 @@ ${produto.qntd}
 
         });
 
-        const textoEditado = `
-    *NOME CLIENTE:*
-${nomeCliente}
-----------------------------------------------
-    ${mensagem}
-        `;
+        const textoEditado = mensagem;
 
         const link = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(textoEditado);
 
@@ -82,6 +91,21 @@ ${nomeCliente}
 
     return (
         <Box sx={{ mt: 12 }}>
+
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                }}
+                open={notif.open}
+                onClose={() => setNotif({
+                    open: false,
+                    mensagem: ''
+                })}
+                message={notif.mensagem}
+                key={notif.mensagem + '1'}
+                autoHideDuration={2000}
+            />
 
             <NavBar />
 

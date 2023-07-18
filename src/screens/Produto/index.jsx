@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStoreCarrinho } from "../../stores/carrinho.store";
 import { useParams } from 'react-router-dom';
+import './style.css';
 
 import {
     Typography,
@@ -46,13 +47,15 @@ export default function PageProduto() {
         mensagem: ""
     });
 
-    function addProCarrinho(produto) {
+    function addProCarrinho() {
 
-        const idProduto = produto.id;
+        const produtoFinal = {...dadosProduto};
 
-        produto.qntd = qntd;
-        produto.vlProduto = produto.vlProduto * qntd;
-        produto.personalizacaoCliente = descricao;
+        const idProduto = produtoFinal.id;
+
+        produtoFinal.qntd = qntd;
+        produtoFinal.vlProduto = vlAtualProduto;
+        produtoFinal.personalizacaoCliente = descricao;
 
         if (produtoJaExisteNoCarrinho(Carrinho, idProduto)) {
 
@@ -64,7 +67,7 @@ export default function PageProduto() {
             return;
         }
 
-        addProdutoCarrinho(produto);
+        addProdutoCarrinho(produtoFinal);
 
         setNotif({
             open: true,
@@ -89,16 +92,20 @@ export default function PageProduto() {
     function resetCamposProduto() {
         setQntd(1);
         setDescricao("");
+        setVlAtualProduto(dadosProduto.vlProduto);
     }
 
     function atualizaVlProduto() {
         
-        console.log(qntd)
         const somaValores = dadosProduto.vlProduto * qntd;
 
         setVlAtualProduto(parseFloat(somaValores.toFixed(2)));
 
     }
+
+    useEffect(() => {
+        atualizaVlProduto();
+    }, [qntd]);
 
     return (
 
@@ -140,9 +147,12 @@ export default function PageProduto() {
                                 >
                                     {
                                         dadosProduto.imgsProduto.map(img => (
-                                            <div key={img}>
-                                                <img src={img} style={{ width: '60%' }} />
-                                            </div>
+                                            <Box key={img} sx={{ width: '100%' }} className="image-with-zoom">
+                                                <img 
+                                                    src={img}
+                                                    style={{ width: '60%' }} 
+                                                />
+                                            </Box>
                                         ))
                                     }
                                 </Carousel>
@@ -174,7 +184,6 @@ export default function PageProduto() {
                                             }}
                                             onChange={e => {
                                                 setQntd(e.target.value);
-                                                atualizaVlProduto();
                                             }}
                                             value={qntd}
                                         >
@@ -222,9 +231,9 @@ export default function PageProduto() {
                                                 bgcolor: '#43BB90'
                                             },
                                         }}
-                                        onClick={() => addProCarrinho(dadosProduto)}
+                                        onClick={() => addProCarrinho()}
                                     >
-                                        Comprar este produto
+                                        Adicionar ao carrinho
                                     </Button>
 
                                 </Box>

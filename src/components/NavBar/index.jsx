@@ -177,20 +177,6 @@ function NavBar() {
                             </Badge>
                         </IconButton>
 
-                        {
-                            false &&
-                            <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="primary-search-account-menu"
-                                aria-haspopup="true"
-                                color="inherit"
-                                title="Conta admin"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                        }
-
                     </Box>
 
                 </Container>

@@ -1,0 +1,9 @@
+.image-with-zoom {
+    width: 60%;
+}
+
+.image-with-zoom:hover {
+    transition: transform 1s ease;
+    transform: scale(2);
+    cursor: zoom-in;
+}
