@@ -92,7 +92,7 @@ ${produto.qntd}
         const textoEditado = `
             ${mensagem}
 
-            *VALOR TOTAL:* ${somaVlProduto}
+            *VALOR TOTAL:* ${parseFloat(somaVlProduto.toFixed(2))}
         `;
 
         const link = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(textoEditado);

@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
 
-import { AppBar, Badge, Box, Container, IconButton, InputBase, List, ListItem, ListItemButton, ListItemText, TextField, Toolbar, Typography } from "@mui/material";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { 
+    AppBar, 
+    Badge, 
+    Box, 
+    Container, 
+    IconButton, 
+    InputBase, 
+    List, 
+    ListItem, 
+    Toolbar, 
+    Typography 
+} from "@mui/material";
 
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import iconLogo from '../../assets/bolsa-de-compras.png';
+
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom';
 import { useStoreCarrinho } from "../../stores/carrinho.store";
 import { useStoreProdutosDisponiveis } from "../../stores/produtosDisponiveis.store";
@@ -136,18 +147,20 @@ function NavBar() {
                                         sx={{ 
                                             cursor: 'pointer', 
                                             '&:hover': { bgcolor: '#f3f3f3' } 
-                                        }}>
+                                        }}
+                                    >
                                         <Typography variant="p" color="primary">{busca}</Typography>
                                     </ListItem>
                                     
                                     {
+                                        ProdutosSearch.length > 0 &&
                                         ProdutosSearch.map((resultado, index) => {
 
                                             if(index <= 10) {
 
                                                 return (
                                                     <ListItem 
-                                                        key={resultado.nmProduto} 
+                                                        key={resultado.id} 
                                                         onClick={() => navigate('/produto/' + resultado.id)} 
                                                         sx={{ 
                                                             cursor: 'pointer', 

@@ -36,7 +36,7 @@ export default function PageProduto() {
         addProdutoCarrinho
     } = useStoreCarrinho(state => state);
 
-    const [dadosProduto] = useState(produtos.find((produto) => produto.id === Number(idProduto)));
+    const [dadosProduto, setDadosProduto] = useState(produtos.find((produto) => produto.id === Number(idProduto)));
 
     const [qntd, setQntd] = useState(1);
     const [vlAtualProduto, setVlAtualProduto] = useState(dadosProduto.vlProduto);
@@ -107,6 +107,15 @@ export default function PageProduto() {
     useEffect(() => {
         atualizaVlProduto();
     }, [qntd]);
+
+    useEffect(() => {
+        setDadosProduto(produtos.find((produto) => produto.id === Number(idProduto)));
+    }, [idProduto])
+
+    useEffect(() => {
+        setQntd(1)
+        setVlAtualProduto(dadosProduto.vlProduto);
+    }, [dadosProduto])
 
     return (
 
