@@ -54,6 +54,7 @@ export default function PageProduto() {
         const idProduto = produtoFinal.id;
 
         produtoFinal.qntd = qntd;
+        produtoFinal.vlDaUnidade = produtoFinal.vlProduto;
         produtoFinal.vlProduto = vlAtualProduto;
         produtoFinal.personalizacaoCliente = descricao;
 

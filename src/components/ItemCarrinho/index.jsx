@@ -5,15 +5,52 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from "react-router-dom";
 
 import QtdItems from "../QntItems";
+import { useEffect, useState } from "react";
+import { useStoreCarrinho } from "../../stores/carrinho.store";
 
-export default function ItemCarrinho({ produto, removeProduto, altQntdProduto }) {
+export default function ItemCarrinho({ produto, removeProduto }) {
 
     const matches = useMediaQuery('(max-width:600px)');
     const navigate = useNavigate();
 
-    const acaoDoFilho = (mensagemDoFilho) => {
-        altQntdProduto(produto.id, '+1');
+    const {
+        altDadosProduto
+    } = useStoreCarrinho();
+
+    const [qntdItems, setQntdItems] = useState(produto.qntd);
+    const [vlAtualProduto, setVlAtualProduto] = useState(produto.vlProduto);
+
+    const acaoMudaQntdProduto = (operador) => {
+
+        const novaQntdItems = operador === '+' ? produto.qntd += 1 : produto.qntd -= 1;
+
+        if(novaQntdItems > 0 && novaQntdItems !== qntdItems) {
+            setQntdItems(novaQntdItems);
+        }
+    
     };
+
+    useEffect(() => {
+
+        const somaValores = produto.vlDaUnidade * qntdItems;
+
+        setVlAtualProduto(parseFloat(somaValores.toFixed(2)));
+
+    }, [qntdItems])
+
+    useEffect(() => {
+        atualizaProdutoCarrinho();
+    }, [vlAtualProduto])
+
+    function atualizaProdutoCarrinho() {
+
+        altDadosProduto({
+            ...produto,
+            vlProduto: vlAtualProduto,
+            qntd: qntdItems
+        });
+
+    }
 
     return (
         <Box
@@ -58,7 +95,7 @@ export default function ItemCarrinho({ produto, removeProduto, altQntdProduto })
                     </Typography>
 
                     <Typography variant="p" fontWeight="bold" fontSize={18} sx={{ color: '#47A9E0' }}>
-                        R$ {parseFloat((produto.vlProduto).toFixed(2))}
+                        R$ {vlAtualProduto}
                     </Typography>
                 </Box>
             </Box>
@@ -76,8 +113,8 @@ export default function ItemCarrinho({ produto, removeProduto, altQntdProduto })
 
                 <QtdItems 
                     idProduto={produto.id}
-                    onAcaoDoFilho={acaoDoFilho}
-                    qntdItems={produto.qntd}
+                    altQntdItens={acaoMudaQntdProduto}
+                    qntdItems={qntdItems}
                 />
 
                 <IconButton onClick={() => removeProduto(produto.id)}>

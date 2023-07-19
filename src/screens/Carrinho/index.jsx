@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
     Typography,
@@ -31,9 +31,28 @@ export default function Carrinho() {
         mensagem: ""
     });
 
-    const somaVlProduto = Carrinho.reduce((acumulador, produto) => {
-        return acumulador + produto.vlProduto;
-    }, 0);
+    const [qntdTotalItens, setQntdTotalItens] = useState(
+        Carrinho.reduce((total, produto) => {
+            return total + produto.qntd
+        }, 0)
+    );
+    const [somaVlProduto, setVlProduto] = useState(
+        Carrinho.reduce((acumulador, produto) => {
+            return acumulador + produto.vlProduto;
+        }, 0)
+    )
+
+    useEffect(() => {
+
+        setQntdTotalItens( Carrinho.reduce((total, produto) => {
+            return total + produto.qntd
+        }, 0))
+
+        setVlProduto(Carrinho.reduce((acumulador, produto) => {
+            return acumulador + produto.vlProduto;
+        }, 0));
+
+    }, [Carrinho])
 
     function finalizaPedido() {
 
@@ -70,23 +89,15 @@ ${produto.qntd}
 
         });
 
-        const textoEditado = mensagem;
+        const textoEditado = `
+            ${mensagem}
+
+            *VALOR TOTAL:* ${somaVlProduto}
+        `;
 
         const link = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(textoEditado);
 
         window.open(link);
-    }
-
-    function altQntdProduto(id) {
-
-        const produtoEncontrado = Carrinho.find(produto => produto.id === id);
-
-        if (produtoEncontrado) {
-
-            produtoEncontrado.qntd = produtoEncontrado.qntd + 1;
-
-            // setProdutosSelecionados([])
-        }
     }
 
     return (
@@ -132,7 +143,6 @@ ${produto.qntd}
                                             key={produto.nmProduto} 
                                             produto={produto} 
                                             removeProduto={(id) => removeProduto(id)} 
-                                            altQntdProduto={(id, action) => altQntdProduto(id, action)}
                                         />
                                     ))
                                     :
@@ -170,13 +180,13 @@ ${produto.qntd}
                                 </Typography>
 
                                 <Typography variant="p" component="p" sx={{ mt: 4 }} fontWeight="bold" fontSize="22px">
-                                    {Carrinho.length}
+                                    {qntdTotalItens}
                                 </Typography>
                             </Box>
 
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Typography variant="p" component="p" sx={{ mt: 2 }}>
-                                    Valor
+                                <Typography variant="p" component="p" sx={{ mt: 2, fontWeight: 'bold' }}>
+                                    Total
                                 </Typography>
                                 <Typography variant="p" component="p" fontWeight="bold" fontSize="22px" sx={{ mt: 2, color: '#47A9E0' }}>
                                     R$ {parseFloat(somaVlProduto.toFixed(2))}
