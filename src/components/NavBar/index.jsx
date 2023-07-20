@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStoreCarrinho } from "../../stores/carrinho.store";
 import { useStoreProdutosDisponiveis } from "../../stores/produtosDisponiveis.store";
 
-function NavBar() {
+function NavBar({ tela }) {
 
     const matches = useMediaQuery('(max-width:600px)');
     const navigate = useNavigate();
@@ -32,6 +32,7 @@ function NavBar() {
 
     const {
         searchProdutos,
+        searchProdutosTelaBusca,
         ProdutosSearch
     } = useStoreProdutosDisponiveis();
 
@@ -110,8 +111,10 @@ function NavBar() {
                                 placeholder="O que deseja?"
                                 value={busca}
                                 onChange={(e) => {
-                                    searchProdutos(e.target.value);
+
                                     setBusca(e.target.value);
+                                    searchProdutos(e.target.value);
+
                                 }}
                                 onBlur={() => {
                                     const listaSearch = document.getElementById('listBuscaProduto');
@@ -142,15 +145,18 @@ function NavBar() {
                                     }}
                                 >
 
-                                    <ListItem 
-                                        onClick={() => navigate('/resultado-busca/' + busca)} 
-                                        sx={{ 
-                                            cursor: 'pointer', 
-                                            '&:hover': { bgcolor: '#f3f3f3' } 
-                                        }}
-                                    >
-                                        <Typography variant="p" color="primary">{busca}</Typography>
-                                    </ListItem>
+                                    {
+                                        tela !== 'resultado-busca' &&
+                                        <ListItem 
+                                            onClick={() => navigate('/resultado-busca/' + busca)} 
+                                            sx={{ 
+                                                cursor: 'pointer', 
+                                                '&:hover': { bgcolor: '#f3f3f3' } 
+                                            }}
+                                        >
+                                            <Typography variant="p" color="primary">{busca}</Typography>
+                                        </ListItem>
+                                    }
                                     
                                     {
                                         ProdutosSearch.length > 0 &&
@@ -161,7 +167,16 @@ function NavBar() {
                                                 return (
                                                     <ListItem 
                                                         key={resultado.id} 
-                                                        onClick={() => navigate('/produto/' + resultado.id)} 
+                                                        onClick={() => {
+
+                                                            if(tela !== 'resultado-busca') {
+                                                                navigate('/produto/' + resultado.id)
+                                                                return;
+                                                            }
+
+                                                            searchProdutosTelaBusca(busca);
+
+                                                        }} 
                                                         sx={{ 
                                                             cursor: 'pointer', 
                                                             '&:hover': { bgcolor: '#f3f3f3' } 

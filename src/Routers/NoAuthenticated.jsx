@@ -16,7 +16,7 @@ export default function NoAuthenticated() {
                 <Route path="*" element={<Home />} />
                 <Route path="/produto/:idProduto" element={<PageProduto />} />
                 <Route path="/carrinho" element={<Carrinho />} />
-                <Route path="/resultado-busca/:busca" element={<ResultadoBusca />} />
+                <Route path="/resultado-busca/:pesquisa" element={<ResultadoBusca />} />
             </Routes>
         </BrowserRouter>
     )
