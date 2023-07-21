@@ -64,8 +64,8 @@ export default function Carrinho() {
             return;
         }
 
-        const numero = "557998024140";
-        // const numero = "557999830201";
+        // const numero = "557998024140";
+        const numero = "557999830201";
 
         let mensagem = Carrinho.map(produto => {
 
