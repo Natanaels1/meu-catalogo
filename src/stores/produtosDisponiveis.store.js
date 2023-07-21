@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { produtos } from '../services/dbProdutos';
-import Filtros from '../components/Filtros';
 
 export const useStoreProdutosDisponiveis = create( (set, get) => ({
 
@@ -53,25 +52,82 @@ export const useStoreProdutosDisponiveis = create( (set, get) => ({
         
         if(resultados.length > 0) {
             set({ ProdutosSearchFiltro: resultados });
+            get().ordernaProdutos('maiorParaMenor');
         }
         
     },
 
     filtrosProdutos: (pesquisa, params) => {
 
-        const resultados = [];
-
         const resultadoFiltrado = produtos.filter( produto => {
-    
-            const categoriaValida = params.categoria === 'todas' || params.categoria === produto.categoria;
-            const prontaEntregaValida = !params.prontaEntrega || params.prontaEntrega === produto.prontaEntrega;
-            const valorValido = params.valor === '0' || params.valor === produto.valor;
 
-            
-            return categoriaValida && prontaEntregaValida && valorValido;
+            if(params.categoria === 'todas' && params.valor === '0' && params.prontaEntrega === false) {
+                return produto;
+            }
+
+            if(params.categoria === 'todas' && params.valor === '0' && params.prontaEntrega === true) {
+                return produto.prontaEntrega === true;
+            }
+
+            if(params.categoria === produto.tipo && params.valor === '0' &&  params.prontaEntrega === false) {
+                return produto.tipo === params.categoria;
+            }
+
+            if(params.categoria === produto.tipo && params.valor === '0' && params.prontaEntrega === true) {
+                return produto.prontaEntrega === true;
+            }
+
+            // if(params.categoria === produto.tipo && params.valor !== '0' && produto.prontaEntrega === true) {
+
+            //     switch(params.valor) {
+            //         case '1':
+            //             return produto.vlProduto > 10 && produto.vlProduto < 50;
+            //         case '2':
+            //             return produto.vlProduto > 50 && produto.vlProduto < 100;
+            //         case '3':
+            //             return produto.vlProduto > 100;
+            //         default:
+            //             return produto;
+            //     }
+
+            // }
+
+            // if(params.categoria === produto.tipo && params.valor !== '0' && produto.prontaEntrega === false) {
+
+            //     switch(params.valor) {
+            //         case '1':
+            //             return produto.vlProduto > 10 && produto.vlProduto < 50;
+            //         case '2':
+            //             return produto.vlProduto > 50 && produto.vlProduto < 100;
+            //         case '3':
+            //             return produto.vlProduto > 100;
+            //         default:
+            //             return produto;
+            //     }
+
+            // }
+
         });
 
-        console.log(resultadoFiltrado);
+        set({ ProdutosSearchFiltro: resultadoFiltrado })
+
+        get().ordernaProdutos('maiorParaMenor');
+
+    },
+
+    ordernaProdutos: (tipoOrdenacao) => {
+
+        if(tipoOrdenacao === 'menorParaMaior') {
+            set({ ProdutosSearchFiltro: get().ProdutosSearchFiltro.sort((a, b) => a.vlProduto - b.vlProduto) })
+            return;
+        }
+
+        if(tipoOrdenacao === 'maiorParaMenor') {
+            set({ ProdutosSearchFiltro: get().ProdutosSearchFiltro.sort((a, b) => b.vlProduto - a.vlProduto) })
+            return;
+        }
+
     }
+
 
 }));

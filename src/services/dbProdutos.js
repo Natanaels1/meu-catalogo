@@ -6,7 +6,7 @@ export const produtos = [
         img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
         descricao: '',
         vlProduto: 22.49,
-        prontaEntrega: false,
+        prontaEntrega: true,
         imgsProduto: [
             'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
             'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
@@ -20,7 +20,7 @@ export const produtos = [
         img: 'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
         descricao: 'Camiseta unisex',
         vlProduto: 39.99,
-        prontaEntrega: true,
+        prontaEntrega: false,
         imgsProduto: [
             'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
         ],
@@ -32,7 +32,7 @@ export const produtos = [
         nmProduto: 'Caneca mensagem biblica',
         img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
         descricao: '',
-        vlProduto: 22.49,
+        vlProduto: 32.99,
         prontaEntrega: false,
         imgsProduto: [
             'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
@@ -46,7 +46,7 @@ export const produtos = [
         nmProduto: 'Camiseta Jesus te ama',
         img: 'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
         descricao: 'Camiseta unisex',
-        vlProduto: 39.99,
+        vlProduto: 129.99,
         prontaEntrega: true,
         imgsProduto: [
             'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
@@ -73,7 +73,7 @@ export const produtos = [
         nmProduto: 'Camiseta Jesus te ama',
         img: 'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
         descricao: 'Camiseta unisex',
-        vlProduto: 39.99,
+        vlProduto: 69.99,
         prontaEntrega: true,
         imgsProduto: [
             'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
@@ -96,6 +96,87 @@ export const produtos = [
     },
     {
         id: 7,
+        tipo: 'Camiseta',
+        nmProduto: 'Camiseta Jesus te ama',
+        img: 'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
+        descricao: 'Camiseta unisex',
+        vlProduto: 39.99,
+        prontaEntrega: true,
+        imgsProduto: [
+            'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
+        ],
+        produtosDisponiveis: 10
+    },
+    {
+        id: 8,
+        tipo: 'Caneca',
+        nmProduto: 'Caneca personalizada',
+        img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
+        descricao: '',
+        vlProduto: 22.49,
+        prontaEntrega: false,
+        imgsProduto: [
+            'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
+            'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
+        ],
+        produtosDisponiveis: 10
+    },
+    {
+        id: 9,
+        tipo: 'Camiseta',
+        nmProduto: 'Camiseta Jesus te ama',
+        img: 'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
+        descricao: 'Camiseta unisex',
+        vlProduto: 39.99,
+        prontaEntrega: true,
+        imgsProduto: [
+            'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
+        ],
+        produtosDisponiveis: 10
+    },
+    {
+        id: 10,
+        tipo: 'Caneca',
+        nmProduto: 'Caneca personalizada',
+        img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
+        descricao: '',
+        vlProduto: 22.49,
+        prontaEntrega: false,
+        imgsProduto: [
+            'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
+            'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
+        ],
+        produtosDisponiveis: 10
+    },
+    {
+        id: 11,
+        tipo: 'Camiseta',
+        nmProduto: 'Camiseta Jesus te ama',
+        img: 'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
+        descricao: 'Camiseta unisex',
+        vlProduto: 39.99,
+        prontaEntrega: true,
+        imgsProduto: [
+            'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',
+        ],
+        produtosDisponiveis: 10
+    },
+    {
+        id: 12,
+        tipo: 'Caneca',
+        nmProduto: 'Caneca personalizada',
+        img: 'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
+        descricao: '',
+        vlProduto: 22.49,
+        prontaEntrega: false,
+        imgsProduto: [
+            'https://img.elo7.com.br/product/original/3B1D793/caneca-personalizavel-com-frase-biblica-325ml-caneca-catolica.jpg',
+            'https://cdn.dooca.store/891/products/jecucdpd0ltmiwzwniixtczp5ncmttt5ftvn_640x640+fill_ffffff.png?v=1599143405&webp=0'
+        ],
+        produtosDisponiveis: 10
+    },
+    {
+        id: 13,
         tipo: 'Camiseta',
         nmProduto: 'Camiseta Jesus te ama',
         img: 'https://i.pinimg.com/originals/c7/ac/a3/c7aca31c5cdc084e9fe435035f05e65d.jpg',

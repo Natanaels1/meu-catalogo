@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Container, Box, Grid, Typography } from "@mui/material";
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -17,7 +17,7 @@ export default function ResultadoBusca() {
     const matches = useMediaQuery('(max-width:600px)');
     const { pesquisa } = useParams();
 
-    const { 
+    const {
         ProdutosSearchFiltro,
         searchProdutosTelaBusca
     } = useStoreProdutosDisponiveis();
@@ -25,6 +25,24 @@ export default function ResultadoBusca() {
     useEffect(() => {
         searchProdutosTelaBusca(pesquisa);
     }, []);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 8;
+    const totalPages = Math.ceil(ProdutosSearchFiltro.length / ITEMS_PER_PAGE);
+
+    function renderItems() {
+
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+
+        return ProdutosSearchFiltro.slice(startIndex, endIndex).map( produto => (
+            <CardProduto key={produto.id} produto={produto} />
+        ))
+    }
+
+    function handlePageChange(event, newPage) {
+        setCurrentPage(newPage);
+    }
 
     return (
 
@@ -45,7 +63,7 @@ export default function ResultadoBusca() {
                         justifyContent: 'center',
                         padding: 1
                     }}
-                >   
+                >
                     <Filtros />
                 </Box>
 
@@ -58,8 +76,8 @@ export default function ResultadoBusca() {
                         mt: 6,
                         mb: 2
                     }}
-                    maxWidth={!matches && "lg" }
-                >  
+                    maxWidth={!matches && "lg"}
+                >
                     <Typography
                         variant='p'
                         component="p"
@@ -80,15 +98,15 @@ export default function ResultadoBusca() {
 
                 <Container
                     sx={{ pt: 4, pb: 8 }}
-                    maxWidth={!matches && "lg" }
+                    maxWidth={!matches && "lg"}
                 >
 
                     <Grid container spacing={2}>
-                        {   
-                            ProdutosSearchFiltro &&
-                            ProdutosSearchFiltro.map( produto => (
-                                <CardProduto key={produto.id} produto={produto} />                                
-                            ))
+                        {
+                            ProdutosSearchFiltro ?       
+                                renderItems()
+                                :
+                                <>Nenhum produto encontrado</>
                         }
                     </Grid>
 
@@ -100,19 +118,20 @@ export default function ResultadoBusca() {
                         }}
                     >
                         {
-                            true &&
-                            <Pagination 
-                                count={10} 
-                                defaultPage={1} 
-                                siblingCount={0} 
+                            ProdutosSearchFiltro.length > 0 &&
+                            <Pagination
+                                count={totalPages}
+                                defaultPage={currentPage}
+                                siblingCount={0}
                                 boundaryCount={1}
-                                color='standard' 
-                                sx={{ color: "#47A9E0", mt: 4 }} 
+                                color='standard'
+                                sx={{ color: "#47A9E0", mt: 4 }}
                                 size="large"
-                                onChange={(e) => console.log(e.currentTarget.textContent)}
+                                onChange={handlePageChange}
                             />
                         }
                     </Box>
+
                 </Container>
 
             </main>

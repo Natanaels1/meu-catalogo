@@ -133,7 +133,7 @@ function NavBar({ tela }) {
                             />
 
                             {
-                                busca &&
+                                busca.length > 0 &&
                                 <List 
                                     id="listBuscaProduto"
                                     sx={{  

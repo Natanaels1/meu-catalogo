@@ -11,7 +11,8 @@ function Filtros() {
     const { pesquisa } = useParams();
 
     const {
-        filtrosProdutos
+        filtrosProdutos,
+        ordernaProdutos
     } = useStoreProdutosDisponiveis();
 
     const [filtros, setFiltros] = useState({
@@ -20,6 +21,7 @@ function Filtros() {
         valor: '0',
     });
 
+    const [ordenacao, setordenacao] = useState('maiorParaMenor');
 
     function handleChangeCategoria(e) {
         setFiltros({
@@ -31,7 +33,7 @@ function Filtros() {
     function handleFiltroProntaEntrega(e) {
         setFiltros({
             ...filtros,
-            prontaEntrega: e.target.value
+            prontaEntrega: e.target.checked
         });
     }
     
@@ -42,8 +44,14 @@ function Filtros() {
         });
     }
 
+    function handleOrdenacaoValor(e) {
+        ordernaProdutos(e.target.value);
+        setordenacao(e.target.value);
+    }
+
     useEffect(() => {
         filtrosProdutos(pesquisa, filtros);
+        ordernaProdutos(ordenacao);
     }, [filtros]);
 
     return (
@@ -82,7 +90,7 @@ function Filtros() {
                 </FormControl>
             </Box>
 
-            <Box
+            {/* <Box
                 sx={{
                     width: 'auto',
                     height: 'auto',
@@ -100,6 +108,26 @@ function Filtros() {
                         <FormControlLabel value="1" control={<Radio size="small" />} label="10 até 50" />
                         <FormControlLabel value="2" control={<Radio size="small" />} label="50 até 100" />
                         <FormControlLabel value="3" control={<Radio size="small" />} label="Acima de 100" />
+                    </RadioGroup>
+                </FormControl>
+            </Box> */}
+
+            <Box
+                sx={{
+                    width: 'auto',
+                    height: 'auto',
+                }}
+            >
+                <FormControl>
+                    <FormLabel id="demo-controlled-radio-buttons-group" sx={{ mb: 1 }}>Ordenar</FormLabel>
+                    <RadioGroup
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group"
+                        value={ordenacao}
+                        onChange={handleOrdenacaoValor}
+                    >   
+                        <FormControlLabel value="menorParaMaior" control={<Radio size="small" />} label="Menor valor para o maior" />
+                        <FormControlLabel value="maiorParaMenor" control={<Radio size="small" />} label="Maior para o menor valor" />
                     </RadioGroup>
                 </FormControl>
             </Box>
@@ -120,6 +148,8 @@ function Filtros() {
                     />
                 </FormControl>
             </Box>
+
+       
 
         </Container>
     )
