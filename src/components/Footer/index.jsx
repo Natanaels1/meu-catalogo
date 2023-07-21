@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import iconInsta from '../../assets/instagram.png';
-import iconFace from '../../assets/facebook.png';
 
 function Copyright() {
     return (
@@ -27,11 +26,8 @@ export default function Footer() {
                     justifyContent: 'center',
                     gap: 2
                 }}>
-                    <Link>
+                    <Link to={'https://www.instagram.com/exodosublimacao/?igshid=MzNlNGNkZWQ4Mg%3D%3D'}>
                         <img src={iconInsta} style={{ width: 30 }} />
-                    </Link>
-                    <Link>
-                        <img src={iconFace}  style={{ width: 30 }} />
                     </Link>
                 </Box>
 
@@ -40,7 +36,7 @@ export default function Footer() {
                     justifyContent: 'center',
                     gap: 2
                 }}>
-                    <Link>
+                    <Link to={'/termos-de-uso'}>
                         <Typography
                             variant="subtitle1"
                             align="center"
@@ -50,7 +46,7 @@ export default function Footer() {
                             Termos de uso
                         </Typography>
                     </Link>
-                    <Link>
+                    <Link to={'/politica-de-privacidade'}>
                         <Typography
                             variant="subtitle1"
                             align="center"
