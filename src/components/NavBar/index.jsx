@@ -20,11 +20,15 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom';
 import { useStoreCarrinho } from "../../stores/carrinho.store";
 import { useStoreProdutosDisponiveis } from "../../stores/produtosDisponiveis.store";
+import { useAuthStore } from "../../stores/auth.store";
+import DadosAdmin from "../DadosAdmin";
 
 function NavBar({ tela }) {
 
     const matches = useMediaQuery('(max-width:600px)');
     const navigate = useNavigate();
+
+    const { dadosEmpresa } = useAuthStore();
 
     const {
         Carrinho
@@ -74,7 +78,7 @@ function NavBar({ tela }) {
                     
                         <img src={iconLogo} style={{ width: 30, marginRight: 10 }} />
                         <Typography variant="h6" color="inherit" noWrap>
-                            Meu Catálogo
+                            {dadosEmpresa.nmEmpresa}
                         </Typography>
 
                     </Box>
@@ -88,122 +92,128 @@ function NavBar({ tela }) {
                         }} 
                         width={ matches ? '100%' : '50%'}
                     >
-                        
-                        <Box
-                            sx={{ 
-                                minWidth: '90%',
-                                flexDirection: 'column',
-                            }}
-                            
-                        >
-                            <InputBase
-                                sx={{ 
-                                    flex: 1, 
-                                    bgcolor: '#F3F3F3', 
-                                    borderRadius: 2, 
-                                    padding: 1, 
-                                    fontSize: '16px', 
-                                    height: '30px', 
-                                    width: '100%', 
-                                    mr: 1, 
-                                    fontWeight: 'regular' 
-                                }}
-                                placeholder="O que deseja?"
-                                value={busca}
-                                onChange={(e) => {
-
-                                    setBusca(e.target.value);
-                                    searchProdutos(e.target.value);
-
-                                }}
-                                onBlur={() => {
-                                    const listaSearch = document.getElementById('listBuscaProduto');
-
-                                    setTimeout(() => {
-                                        listaSearch.style = 'display: none';
-                                    }, 200);
-                                }}
-                                onFocus={() => {
-                                    const listaSearch = document.getElementById('listBuscaProduto');
-
-                                    if(listaSearch) {
-                                        listaSearch.style = 'display: ';
-                                    }
-                                }}
-                            />
-
-                            {
-                                busca.length > 0 &&
-                                <List 
-                                    id="listBuscaProduto"
-                                    sx={{  
-                                        bgcolor: 'background.paper', 
-                                        position: 'absolute', 
-                                        maxWidth: !matches ? 517 : 308,
-                                        width: '100%',
-                                        mt: 1
+                        {
+                            tela !== 'gestao-produtos' ?
+                            <>
+                                <Box
+                                    sx={{ 
+                                        minWidth: '90%',
+                                        flexDirection: 'column',
                                     }}
+                                    
                                 >
+                                    <InputBase
+                                        sx={{ 
+                                            flex: 1, 
+                                            bgcolor: '#F3F3F3', 
+                                            borderRadius: 2, 
+                                            padding: 1, 
+                                            fontSize: '16px', 
+                                            height: '30px', 
+                                            width: '100%', 
+                                            mr: 1, 
+                                            fontWeight: 'regular' 
+                                        }}
+                                        placeholder="O que deseja?"
+                                        value={busca}
+                                        onChange={(e) => {
+
+                                            setBusca(e.target.value);
+                                            searchProdutos(e.target.value);
+
+                                        }}
+                                        onBlur={() => {
+                                            const listaSearch = document.getElementById('listBuscaProduto');
+
+                                            setTimeout(() => {
+                                                listaSearch.style = 'display: none';
+                                            }, 200);
+                                        }}
+                                        onFocus={() => {
+                                            const listaSearch = document.getElementById('listBuscaProduto');
+
+                                            if(listaSearch) {
+                                                listaSearch.style = 'display: ';
+                                            }
+                                        }}
+                                    />
 
                                     {
-                                        tela !== 'resultado-busca' &&
-                                        <ListItem 
-                                            onClick={() => navigate('/resultado-busca/' + busca)} 
-                                            sx={{ 
-                                                cursor: 'pointer', 
-                                                '&:hover': { bgcolor: '#f3f3f3' } 
+                                        busca.length > 0 &&
+                                        <List 
+                                            id="listBuscaProduto"
+                                            sx={{  
+                                                bgcolor: 'background.paper', 
+                                                position: 'absolute', 
+                                                maxWidth: !matches ? 517 : 308,
+                                                width: '100%',
+                                                mt: 1
                                             }}
                                         >
-                                            <Typography variant="p" color="primary">{busca}</Typography>
-                                        </ListItem>
-                                    }
-                                    
-                                    {
-                                        ProdutosSearch.length > 0 &&
-                                        ProdutosSearch.map((resultado, index) => {
 
-                                            if(index <= 10) {
-
-                                                return (
-                                                    <ListItem 
-                                                        key={resultado.id} 
-                                                        onClick={() => {
-
-                                                            if(tela !== 'resultado-busca') {
-                                                                navigate('/produto/' + resultado.id)
-                                                                return;
-                                                            }
-
-                                                            searchProdutosTelaBusca(busca);
-
-                                                        }} 
-                                                        sx={{ 
-                                                            cursor: 'pointer', 
-                                                            '&:hover': { bgcolor: '#f3f3f3' } 
-                                                        }}
-                                                    >
-                                                        <Typography variant="p" color="primary">{resultado.nmProduto}</Typography>
-                                                    </ListItem>
-                                                )
-
+                                            {
+                                                tela !== 'resultado-busca' &&
+                                                <ListItem 
+                                                    onClick={() => navigate('/resultado-busca/' + busca)} 
+                                                    sx={{ 
+                                                        cursor: 'pointer', 
+                                                        '&:hover': { bgcolor: '#f3f3f3' } 
+                                                    }}
+                                                >
+                                                    <Typography variant="p" color="primary">{busca}</Typography>
+                                                </ListItem>
                                             }
-                                        })
+                                            
+                                            {
+                                                ProdutosSearch.length > 0 &&
+                                                ProdutosSearch.map((resultado, index) => {
+
+                                                    if(index <= 10) {
+
+                                                        return (
+                                                            <ListItem 
+                                                                key={resultado.id} 
+                                                                onClick={() => {
+
+                                                                    if(tela !== 'resultado-busca') {
+                                                                        navigate('/produto/' + resultado.id)
+                                                                        return;
+                                                                    }
+
+                                                                    searchProdutosTelaBusca(busca);
+
+                                                                }} 
+                                                                sx={{ 
+                                                                    cursor: 'pointer', 
+                                                                    '&:hover': { bgcolor: '#f3f3f3' } 
+                                                                }}
+                                                            >
+                                                                <Typography variant="p" color="primary">{resultado.nmProduto}</Typography>
+                                                            </ListItem>
+                                                        )
+
+                                                    }
+                                                })
+                                            }
+
+                                        </List>
                                     }
+                                </Box>
+                                <IconButton 
+                                    size="large" 
+                                    color="inherit"
+                                    title="Carrinho"
+                                    onClick={() => navigate('/carrinho')}
+                                >
+                                    <Badge badgeContent={Carrinho.length} color="error">
+                                        <ShoppingCartIcon />
+                                    </Badge>
+                                </IconButton>
+                            </>
+                            :
+                            <DadosAdmin />
+                        }
 
-                                </List>
-                            }
-                        </Box>
-
-                        <IconButton 
-                            size="large" 
-                            color="inherit"
-                            title="Carrinho"
-                            onClick={() => navigate('/carrinho')}
-                        >
-                            <Badge badgeContent={Carrinho.length} color="error">
-                                <ShoppingCartIcon />
-                            </Badge>
-                        </IconButton>
 
                     </Box>
 
