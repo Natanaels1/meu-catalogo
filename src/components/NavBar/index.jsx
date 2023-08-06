@@ -78,7 +78,7 @@ function NavBar({ tela }) {
                     
                         <img src={iconLogo} style={{ width: 30, marginRight: 10 }} />
                         <Typography variant="h6" color="inherit" noWrap>
-                            {dadosEmpresa.nmEmpresa}
+                            {dadosEmpresa.nmEmpresa ? dadosEmpresa.nmEmpresa : "Meu Catálogo"}
                         </Typography>
 
                     </Box>
